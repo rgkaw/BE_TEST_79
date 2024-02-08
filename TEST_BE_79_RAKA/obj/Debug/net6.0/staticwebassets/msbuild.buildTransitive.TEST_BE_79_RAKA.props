@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\TEST_BE_79_RAKA.props" />
+</Project>

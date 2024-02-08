@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TEST_BE_79_RAKA", "TEST_BE_79_RAKA\TEST_BE_79_RAKA.csproj", "{C2165773-29E4-4897-81C0-E77D8D21525D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2165773-29E4-4897-81C0-E77D8D21525D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2165773-29E4-4897-81C0-E77D8D21525D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2165773-29E4-4897-81C0-E77D8D21525D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2165773-29E4-4897-81C0-E77D8D21525D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE819145-7E24-4F89-A5A5-C17020222BF9}
+	EndGlobalSection
+EndGlobal
