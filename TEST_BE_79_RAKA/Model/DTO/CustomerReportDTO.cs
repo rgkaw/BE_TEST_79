@@ -2,7 +2,7 @@
 {
     public class CustomerReportDTO
     {
-        public DateTime TransactionDate { get; set; }
+        public DateOnly TransactionDate { get; set; }
         public String Description { get; set; }
         public Char Credit { get; set; }
         public Char Debit { get; set; }

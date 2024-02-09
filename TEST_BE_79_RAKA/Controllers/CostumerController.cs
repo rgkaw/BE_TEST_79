@@ -24,7 +24,7 @@ namespace TEST_BE_79_RAKA.Controllers
             _con = new SqlConnection(_config["ConnectionStrings:WindowsConnection"]);
         }
         [HttpPost("api/v1/user/register")]
-        public IActionResult Register(RegCustomerReqDTO cs)
+        public IActionResult Register([FromBody] RegCustomerReqDTO cs)
         {
 
             Console.WriteLine("============================\n\n");
@@ -34,26 +34,44 @@ namespace TEST_BE_79_RAKA.Controllers
             }
             return StatusCode(500);
         }
+
+
         [HttpPost("api/v1/transaction/register")]
-        public IActionResult NewTransaction(NewTransactionDTO trs)
+        public IActionResult NewTransaction([FromBody] NewTransactionDTO trs)
         {
             if (InsertTransaction(trs)) { return Ok(); }
+            return StatusCode(500);
+        }
+
+        [HttpGet("api/v1/user/point/")]
+        public IActionResult getCustPoint()
+        {
+            List<Customer> src = GetCustomerList();
+            List<TotalPointResponseDTO> res = new List<TotalPointResponseDTO>();
+            foreach (Customer c in src )
+            {
+                res.Add(getCustPoint(c.Id));
+                
+            }
+            if (res != null) { return Ok(JsonSerializer.SerializeToDocument(res)); }
             return StatusCode(500);
         }
         [HttpGet("api/v1/user/point/{id}")]
         public IActionResult GetCustomerPoint(int id)
         {
-            var res = getCustomerPoint(id);
-            if (res!=null) { return Ok(JsonSerializer.Serialize(res)); }
+            var res = getCustPoint(id);
+            if (res!=null) { return Ok(JsonSerializer.SerializeToDocument(res)); }
             return StatusCode(500);
         }
+
+
 
         [HttpGet("api/v1/user/report/")]
         public IActionResult GetCustomerReport(CustomerReportReqDTO req)
         {
             if(!ModelState.IsValid) { return BadRequest(); }
             List<CustomerReportDTO> res = GetCustReport(req.Id,req.DateStart,req.DateEnd);
-            if(res!=null) return Ok(JsonSerializer.Serialize(res));
+            if(res!=null) return Ok(JsonSerializer.SerializeToDocument(res));
             return StatusCode(500);
         }
 
@@ -76,8 +94,9 @@ namespace TEST_BE_79_RAKA.Controllers
                 _con.Close();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 trs.Rollback();
                 _con.Close();
                 return false;
@@ -102,11 +121,12 @@ namespace TEST_BE_79_RAKA.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 _con.Close();
                 return false;
             }
         }
-        public TotalPointResponseDTO getCustomerPoint(int id) 
+        public TotalPointResponseDTO getCustPoint(int id) 
         {
             _con.Open();
             SqlCommand cmd;
@@ -149,38 +169,31 @@ namespace TEST_BE_79_RAKA.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 _con.Close();
                 return new TotalPointResponseDTO();
             }
         }
-        public  static double calcPointPulsa(double pulsa) 
+        public static double calcPoint(double x, int limit1, int limit2, int tsh)
         {
             double point = 0;
-            double spent = 0;
-            while (spent<pulsa && pulsa>=1000) 
-            { 
-                if (10000 < spent && spent <=30000) { point++; }
-                else if(spent > 30000) { point++; point++; }
-                spent += 1000;
-            }
+            
+            if (x > limit2) { double m = x > limit1 ? limit2 : x - limit2; point += (1 * (m / tsh)); }
+            if (x > limit1) { double m = x - limit1; point += (2 * (m / tsh)); }
             return point;
+        }
+        public  static double calcPointPulsa(double pulsa) 
+        {
+            return calcPoint(pulsa, 30000,10000,1000);
 
         }
         public  static double calcPointListrik(double listrik)
         {
-            double point = 0;
-            double spent = 0;
-            while (spent < listrik && listrik >= 2000)
-            {
-                if (50000 < spent && spent <= 100000) { point++; }
-                else if (spent > 100000) { point++; point++; }
-                spent += 2000;
-            }
-            return point;
+            return calcPoint(listrik,100000,50000,2000);
 
         }
 
-        public List<CustomerReportDTO> GetCustReport(int id, DateTime startTime, DateTime endTime)
+        public List<CustomerReportDTO> GetCustReport(int id, DateOnly startTime, DateOnly endTime)
         {
             _con.Open();
             SqlCommand cmd;
@@ -200,7 +213,7 @@ namespace TEST_BE_79_RAKA.Controllers
                 {
                     r = new CustomerReportDTO()
                     {
-                        TransactionDate = (DateTime)reader["TRS_DATE"],
+                        TransactionDate = (DateOnly)reader["TRS_DATE"],
                         Description = (String)reader["DSC"],
                         Credit = Char.Parse(reader["CRD"].ToString()),
                         Debit = Char.Parse(reader["DBT"].ToString()),
@@ -215,9 +228,43 @@ namespace TEST_BE_79_RAKA.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 _con.Close();
                 return new List<CustomerReportDTO>();
             }
+        }
+
+        public List<Customer> GetCustomerList()
+        {
+            _con.Open();
+            SqlDataReader reader;
+            try 
+            {
+
+                SqlCommand cmd = new SqlCommand("SEL_CST", _con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                reader = cmd.ExecuteReader();
+
+                List<Customer> result = new List<Customer>();
+                while (reader.Read())
+                {
+                    result.Add(new Customer()
+                    {
+                        Id = (int)reader["ID"],
+                        Name = (String)reader["Name"]
+                    });
+                }
+                _con.Close();
+                return result;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                _con.Close();
+                return new List<Customer>();
+            }
+           
+
         }
     }
 }

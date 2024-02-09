@@ -8,11 +8,32 @@
     ".NETCoreApp,Version=v6.0": {
       "TEST_BE_79_RAKA/1.0.0": {
         "dependencies": {
+          "DateOnlyTimeOnly.AspNet.Swashbuckle": "2.1.1",
           "EntityFramework": "6.4.4",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
           "TEST_BE_79_RAKA.dll": {}
+        }
+      },
+      "DateOnlyTimeOnly.AspNet/2.1.1": {
+        "runtime": {
+          "lib/net6.0/DateOnlyTimeOnly.AspNet.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
+          }
+        }
+      },
+      "DateOnlyTimeOnly.AspNet.Swashbuckle/2.1.1": {
+        "dependencies": {
+          "DateOnlyTimeOnly.AspNet": "2.1.1",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0"
+        },
+        "runtime": {
+          "lib/net6.0/DateOnlyTimeOnly.AspNet.Swashbuckle.dll": {
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
+          }
         }
       },
       "EntityFramework/6.4.4": {
@@ -277,6 +298,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "DateOnlyTimeOnly.AspNet/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7HlGV6sm0efRMquxnZaoqV3KybUMOs1IaJ4TaX85v7IZF01h1YV6Zscos9g4qQfrGYfvqLjbpe3Q54cmMBeISQ==",
+      "path": "dateonlytimeonly.aspnet/2.1.1",
+      "hashPath": "dateonlytimeonly.aspnet.2.1.1.nupkg.sha512"
+    },
+    "DateOnlyTimeOnly.AspNet.Swashbuckle/2.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X2k2yelbE2jyBI/pOv5T615ell5Rhmb31MV1mM0Q+VpqNUran20gdGz9MBP9dbAcbH1EQ/l/s/EcX/+Bp365jQ==",
+      "path": "dateonlytimeonly.aspnet.swashbuckle/2.1.1",
+      "hashPath": "dateonlytimeonly.aspnet.swashbuckle.2.1.1.nupkg.sha512"
     },
     "EntityFramework/6.4.4": {
       "type": "package",
