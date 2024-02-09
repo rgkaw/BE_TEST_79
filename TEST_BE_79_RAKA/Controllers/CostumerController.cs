@@ -26,9 +26,9 @@ namespace TEST_BE_79_RAKA.Controllers
         [HttpPost("api/v1/user/register")]
         public IActionResult Register([FromBody] RegCustomerReqDTO cs)
         {
-
-            Console.WriteLine("============================\n\n");
-            if (InsertCustomer(cs)) 
+            Customer res = InsertCustomer(cs);
+            if (res.Id == -1) { return BadRequest(); }
+            else if (InsertCustomer(cs).Id!=0) 
             {
                 return Ok();
             }
@@ -36,7 +36,7 @@ namespace TEST_BE_79_RAKA.Controllers
         }
 
 
-        [HttpPost("api/v1/transaction/register")]
+        [HttpPost("api/v1/transaction/entry")]
         public IActionResult NewTransaction([FromBody] NewTransactionDTO trs)
         {
             if (InsertTransaction(trs)) { return Ok(); }
@@ -76,7 +76,7 @@ namespace TEST_BE_79_RAKA.Controllers
         }
 
 
-        public Boolean InsertCustomer(RegCustomerReqDTO cs)
+        public Customer InsertCustomer(RegCustomerReqDTO cs)
         {
             _con.Open();
             SqlCommand cmd;
@@ -89,17 +89,23 @@ namespace TEST_BE_79_RAKA.Controllers
                 cmd.Connection = _con;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@NAME", SqlDbType.NVarChar).Value = cs.Name;
+                cmd.Parameters.Add("@NEW_ID", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.ExecuteNonQuery();
                 trs.Commit();
                 _con.Close();
-                return true;
+                var x = cmd.Parameters["@NEW_ID"].Value;
+                return new Customer()
+                {
+                    Id = x is int ? (int)x : -1,
+                    Name = (string)cmd.Parameters["@NAME"].Value
+                };
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 trs.Rollback();
                 _con.Close();
-                return false;
+                return new Customer() { Id = -1 };
             }
         }
         public Boolean InsertTransaction(NewTransactionDTO trs) 
