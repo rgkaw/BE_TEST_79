@@ -8,6 +8,7 @@ using System.Diagnostics.Eventing.Reader;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection.PortableExecutable;
 using System.Drawing;
+using System.Text.Json;
 
 namespace TEST_BE_79_RAKA.Controllers
 {
@@ -39,11 +40,20 @@ namespace TEST_BE_79_RAKA.Controllers
             if (InsertTransaction(trs)) { return Ok(); }
             return StatusCode(500);
         }
-        [HttpGet("api/v1/user/{id}/point")]
+        [HttpGet("api/v1/user/point/{id}")]
         public IActionResult GetCustomerPoint(int id)
         {
             var res = getCustomerPoint(id);
-            if (res>=0) { return Ok(res); }
+            if (res!=null) { return Ok(JsonSerializer.Serialize(res)); }
+            return StatusCode(500);
+        }
+
+        [HttpGet("api/v1/user/report/")]
+        public IActionResult GetCustomerReport(CustomerReportReqDTO req)
+        {
+            if(!ModelState.IsValid) { return BadRequest(); }
+            List<CustomerReportDTO> res = GetCustReport(req.Id,req.DateStart,req.DateEnd);
+            if(res!=null) return Ok(JsonSerializer.Serialize(res));
             return StatusCode(500);
         }
 
@@ -96,7 +106,7 @@ namespace TEST_BE_79_RAKA.Controllers
                 return false;
             }
         }
-        public int getCustomerPoint(int id) 
+        public TotalPointResponseDTO getCustomerPoint(int id) 
         {
             _con.Open();
             SqlCommand cmd;
@@ -115,13 +125,32 @@ namespace TEST_BE_79_RAKA.Controllers
                     if (reader["TRS_TYPE"].ToString().Equals("Bayar Listrik")) { totalPoint += calcPointListrik((double) reader["TRS_AMT"]); }
                 }
                 _con.Close();
-                return (int) totalPoint;
+                
+                _con.Open();
+                reader = null;
+                cmd = new SqlCommand("SEL_CST", _con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", SqlDbType.Char).Value = id;
+                reader = cmd.ExecuteReader();
+                TotalPointResponseDTO totalPointResponse = new TotalPointResponseDTO();
+                if (reader.Read()) {
+                    totalPointResponse = new TotalPointResponseDTO()
+                    {
+                        AccountId = (int)reader["ID"],
+                        Name = (string)reader["Name"],
+                        Points = (int)totalPoint
+
+                    };
+                }
+                 
+                _con.Close();
+                return totalPointResponse;
 
             }
             catch (Exception ex)
             {
                 _con.Close();
-                return -1;
+                return new TotalPointResponseDTO();
             }
         }
         public  static double calcPointPulsa(double pulsa) 
@@ -149,6 +178,46 @@ namespace TEST_BE_79_RAKA.Controllers
             }
             return point;
 
+        }
+
+        public List<CustomerReportDTO> GetCustReport(int id, DateTime startTime, DateTime endTime)
+        {
+            _con.Open();
+            SqlCommand cmd;
+            try
+            {
+                cmd = new SqlCommand("CST_TRS_RPT", _con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CST_ID", SqlDbType.Int).Value = id;
+                cmd.Parameters.AddWithValue("@DATE_START", SqlDbType.Date).Value = startTime;
+                cmd.Parameters.AddWithValue("@DATE_END", SqlDbType.Date).Value = endTime;
+
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                List<CustomerReportDTO> result = new List<CustomerReportDTO>();
+                CustomerReportDTO r = new CustomerReportDTO();
+                while (reader.Read())
+                {
+                    r = new CustomerReportDTO()
+                    {
+                        TransactionDate = (DateTime)reader["TRS_DATE"],
+                        Description = (String)reader["DSC"],
+                        Credit = Char.Parse(reader["CRD"].ToString()),
+                        Debit = Char.Parse(reader["DBT"].ToString()),
+                        Amount = (Double)reader["TRS_AMT"],
+                    };
+                    result.Add(r);
+
+                }
+                _con.Close();
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                _con.Close();
+                return new List<CustomerReportDTO>();
+            }
         }
     }
 }

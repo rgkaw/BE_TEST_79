@@ -2,8 +2,8 @@
 {
     public class TotalPointResponseDTO
     {
-        int AccountId { get; set; }
-        String Name { get; set; }
-        int Points { get; set; }
+        public int AccountId { get; set; }
+        public String Name { get; set; }
+        public int Points { get; set; }
     }
 }
