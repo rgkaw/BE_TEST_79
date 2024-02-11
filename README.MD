@@ -48,3 +48,7 @@ Untuk menjalankan aplikasi ini:
         sqlcmd -S tcp:localhost,[PORT] -i Data\init.sql
       - jalankan applikasi dengan perintah:
         dotnet run
+
+API DOC:
+setelah applikasi berhasil dijalankan silahkan ke halaman berikut untuk melihat dokumentasinya:
+  http://localhost:5151/swagger
