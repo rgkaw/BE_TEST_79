@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ssx0FgWChfhdZxr31kUItEC+xLALEYA1wJXunKk7Ms/iSjz/xp0k/cqpvq/d5Evzi9wd7C8amG1qGhr2rWor5w==",
+  "dgSpecHash": "qYF3kaTwSjjWEf8yUWFa5QIYNxve2JgkypcvpitX0/idSDt4PiI8l9wbLucWGZCvZErOB+A/wUvL0h9i1UNhtg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Raka\\source\\repos\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA.csproj",
   "expectedPackageFiles": [
@@ -18,6 +18,7 @@
     "C:\\Users\\Raka\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Raka\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Raka\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\Raka\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\6.5.0\\swashbuckle.aspnetcore.annotations.6.5.0.nupkg.sha512",
     "C:\\Users\\Raka\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\Raka\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
     "C:\\Users\\Raka\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",

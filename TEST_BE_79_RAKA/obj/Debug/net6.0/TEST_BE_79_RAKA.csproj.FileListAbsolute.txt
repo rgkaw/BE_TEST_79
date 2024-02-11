@@ -106,3 +106,4 @@ C:\Users\HJV_21\Source\Workspaces\BE_TEST_79\BE_TEST_79\TEST_BE_79_RAKA\bin\Debu
 C:\Users\HJV_21\Source\Workspaces\BE_TEST_79\BE_TEST_79\TEST_BE_79_RAKA\bin\Debug\net6.0\DateOnlyTimeOnly.AspNet.Swashbuckle.dll
 C:\Users\Raka\source\repos\TEST_BE_79_RAKA\TEST_BE_79_RAKA\bin\Debug\net6.0\DateOnlyTimeOnly.AspNet.dll
 C:\Users\Raka\source\repos\TEST_BE_79_RAKA\TEST_BE_79_RAKA\bin\Debug\net6.0\DateOnlyTimeOnly.AspNet.Swashbuckle.dll
+C:\Users\Raka\source\repos\TEST_BE_79_RAKA\TEST_BE_79_RAKA\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
