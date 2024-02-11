@@ -35,7 +35,7 @@ namespace TEST_BE_79_RAKA.Controllers
                     {
                         code = 200,
                         status = "Success",
-                        message =JsonSerializer.SerializeToDocument(cs)
+                        message =JsonSerializer.SerializeToDocument(res)
                     }
                     ));
             }
@@ -233,7 +233,6 @@ namespace TEST_BE_79_RAKA.Controllers
                 _con.Close();
                 
                 _con.Open();
-                reader = null;
                 cmd = new SqlCommand("SEL_CST", _con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ID", SqlDbType.Char).Value = id;
@@ -279,7 +278,7 @@ namespace TEST_BE_79_RAKA.Controllers
 
         }
 
-        public List<CustomerReportDTO> GetCustReport(int id, DateOnly startTime, DateOnly endTime)
+        public List<CustomerReportDTO> GetCustReport(int id, DateTime startTime, DateTime endTime)
         {
             _con.Open();
             SqlCommand cmd;

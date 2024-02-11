@@ -6,7 +6,7 @@ namespace TEST_BE_79_RAKA.Model.DTO
     {
         public int code { get; set; }
         public string status { get; set; } = String.Empty;
-        public JsonDocument message { get; set; }
+        public JsonDocument message { get; set; } 
     }
 
     public class ErrorMessage

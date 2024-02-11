@@ -27,7 +27,6 @@ CREATE TABLE TRS_DSC
 	TRS_TYPE VARCHAR(64) NOT NULL
 
 );
-INSERT INTO TRS_DSC(TRS_TYPE) VALUES('Bayar Listrik'),('Tarik Tunai'), ('Setor Tunai'), ('Beli Pulsa');
 GO
 
 IF NOT EXISTS
@@ -105,13 +104,11 @@ AS
 		(
 			@NAME
 		)
-		SELECT SCOPE_IDENTITY()
+		SELECT @NEW_ID = SCOPE_IDENTITY()
 		
 	END
 GO
 
-
---=============================================
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'INS_TRS')
 	DROP PROCEDURE INS_TRS
 GO
