@@ -11,8 +11,8 @@ namespace TEST_BE_79_RAKA.Model.DTO
 
     public class ErrorMessage
     {
-        public ErrorMessage(string s) { this.message = s; }
-        public string message { get; set; }
+        public ErrorMessage(string s) { this.Error = s; }
+        public string Error { get; set; }
     }
 
 }

@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
-using TEST_BE_79_RAKA.Data.StoredProcedure;
 using TEST_BE_79_RAKA.Model;
 using TEST_BE_79_RAKA.Model.DTO;
-using System.Diagnostics.Eventing.Reader;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection.PortableExecutable;
-using System.Drawing;
 using System.Text.Json;
 
 namespace TEST_BE_79_RAKA.Controllers
@@ -26,6 +21,17 @@ namespace TEST_BE_79_RAKA.Controllers
         [HttpPost("api/v1/user/register")]
         public IActionResult Register([FromBody] RegCustomerReqDTO cs)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 400,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Invalid Data"))
+                }
+                ));
+            }
             Customer res = InsertCustomer(cs);
             if (res.Id == -1) { return BadRequest(); }
             else if (InsertCustomer(cs).Id!=0) 
@@ -53,13 +59,25 @@ namespace TEST_BE_79_RAKA.Controllers
         [HttpPost("api/v1/transaction/entry")]
         public IActionResult NewTransaction([FromBody] NewTransactionDTO trs)
         {
+            if (!ModelState.IsValid) {
+                return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 400,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Invalid Data"))
+                }
+                ));
+            }
             if (InsertTransaction(trs))
             {
                 return Ok(JsonSerializer.SerializeToDocument(
                     new Response()
                     {
                         code = 200,
-                        status = "Success"
+                        status = "Success",
+                        message = JsonSerializer.SerializeToDocument(trs)
+
                     }
                     ));
             }
@@ -133,7 +151,20 @@ namespace TEST_BE_79_RAKA.Controllers
         [HttpGet("api/v1/user/report/")]
         public IActionResult GetCustomerReport(CustomerReportReqDTO req)
         {
-            if(!ModelState.IsValid) { return BadRequest(); }
+            if(!ModelState.IsValid)
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(JsonSerializer.SerializeToDocument(
+                    new Response()
+                    {
+                        code = 400,
+                        status = "Failed",
+                        message = JsonSerializer.SerializeToDocument(new ErrorMessage("Invalid Data"))
+                    }
+                    ));
+                }
+            }
             List<CustomerReportDTO> res = GetCustReport(req.Id,req.DateStart,req.DateEnd);
             if(res!=null) {
                 return Ok(JsonSerializer.SerializeToDocument(
@@ -298,7 +329,7 @@ namespace TEST_BE_79_RAKA.Controllers
                 {
                     r = new CustomerReportDTO()
                     {
-                        TransactionDate = (DateOnly)reader["TRS_DATE"],
+                        TransactionDate = ((DateTime) reader["TRS_DATE"]).ToShortDateString(),
                         Description = (String)reader["DSC"],
                         Credit = Char.Parse(reader["CRD"].ToString()),
                         Debit = Char.Parse(reader["DBT"].ToString()),
