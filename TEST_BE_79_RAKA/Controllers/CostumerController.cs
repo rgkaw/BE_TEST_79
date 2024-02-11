@@ -30,17 +30,47 @@ namespace TEST_BE_79_RAKA.Controllers
             if (res.Id == -1) { return BadRequest(); }
             else if (InsertCustomer(cs).Id!=0) 
             {
-                return Ok();
+                return Ok(JsonSerializer.SerializeToDocument(
+                    new Response()
+                    {
+                        code = 200,
+                        status = "Success",
+                        message =JsonSerializer.SerializeToDocument(cs)
+                    }
+                    ));
             }
-            return StatusCode(500);
+            return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 400,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Name is Already Exist"))
+                }
+                ));
         }
 
 
         [HttpPost("api/v1/transaction/entry")]
         public IActionResult NewTransaction([FromBody] NewTransactionDTO trs)
         {
-            if (InsertTransaction(trs)) { return Ok(); }
-            return StatusCode(500);
+            if (InsertTransaction(trs))
+            {
+                return Ok(JsonSerializer.SerializeToDocument(
+                    new Response()
+                    {
+                        code = 200,
+                        status = "Success"
+                    }
+                    ));
+            }
+            return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 500,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Failure When Inserting Data"))
+                }
+                ));
         }
 
         [HttpGet("api/v1/user/point/")]
@@ -53,15 +83,49 @@ namespace TEST_BE_79_RAKA.Controllers
                 res.Add(getCustPoint(c.Id));
                 
             }
-            if (res != null) { return Ok(JsonSerializer.SerializeToDocument(res)); }
-            return StatusCode(500);
+            if (res != null)
+            {
+                return Ok(JsonSerializer.SerializeToDocument(
+                    new Response()
+                    {
+                        code = 200,
+                        status = "Success",
+                        message = JsonSerializer.SerializeToDocument(res)
+                    }
+                    ));
+            }
+            return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 500,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Server Error"))
+                }
+                ));
         }
         [HttpGet("api/v1/user/point/{id}")]
         public IActionResult GetCustomerPoint(int id)
         {
             var res = getCustPoint(id);
-            if (res!=null) { return Ok(JsonSerializer.SerializeToDocument(res)); }
-            return StatusCode(500);
+            if (res!=null)
+            {
+                return Ok(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 200,
+                    status = "Success",
+                    message = JsonSerializer.SerializeToDocument(res)
+                }
+                ));
+            }
+            return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 400,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Invalid Input Parameters"))
+                }
+                ));
         }
 
 
@@ -71,8 +135,24 @@ namespace TEST_BE_79_RAKA.Controllers
         {
             if(!ModelState.IsValid) { return BadRequest(); }
             List<CustomerReportDTO> res = GetCustReport(req.Id,req.DateStart,req.DateEnd);
-            if(res!=null) return Ok(JsonSerializer.SerializeToDocument(res));
-            return StatusCode(500);
+            if(res!=null) {
+                return Ok(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 200,
+                    status = "Success",
+                    message = JsonSerializer.SerializeToDocument(res)
+                }
+                ));
+            }
+            return BadRequest(JsonSerializer.SerializeToDocument(
+                new Response()
+                {
+                    code = 400,
+                    status = "Failed",
+                    message = JsonSerializer.SerializeToDocument(new ErrorMessage("Invalid Input Parameters"))
+                }
+                ));
         }
 
 

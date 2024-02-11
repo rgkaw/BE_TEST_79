@@ -1559,32 +1559,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HJV_21\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\MESCIUS\\ComponentOne\\WPF\\bin\\v5\\": {}
+    "C:\\Users\\Raka\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HJV_21\\Source\\Workspaces\\BE_TEST_79\\BE_TEST_79\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA.csproj",
+      "projectUniqueName": "C:\\Users\\Raka\\source\\repos\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA.csproj",
       "projectName": "TEST_BE_79_RAKA",
-      "projectPath": "C:\\Users\\HJV_21\\Source\\Workspaces\\BE_TEST_79\\BE_TEST_79\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA.csproj",
-      "packagesPath": "C:\\Users\\HJV_21\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HJV_21\\Source\\Workspaces\\BE_TEST_79\\BE_TEST_79\\TEST_BE_79_RAKA\\obj\\",
+      "projectPath": "C:\\Users\\Raka\\source\\repos\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA.csproj",
+      "packagesPath": "C:\\Users\\Raka\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Raka\\source\\repos\\TEST_BE_79_RAKA\\TEST_BE_79_RAKA\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\MESCIUS\\ComponentOne\\WPF\\bin\\v5\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\HJV_21\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\ComponentOne.config",
+        "C:\\Users\\Raka\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\MESCIUS\\ComponentOne\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1635,7 +1630,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }

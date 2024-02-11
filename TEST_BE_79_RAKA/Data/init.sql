@@ -109,6 +109,12 @@ AS
 		
 	END
 GO
+
+
+--=============================================
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'INS_TRS')
+	DROP PROCEDURE INS_TRS
+GO
 CREATE PROCEDURE INS_TRS
 (
 	@CST_ID INT,
@@ -137,6 +143,9 @@ AS
 	END
 GO
 
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'CST_TRS_RPT')
+	DROP PROCEDURE CST_TRS_RPT
+GO
 CREATE PROCEDURE CST_TRS_RPT
 (
 	@CST_ID INT,
@@ -157,7 +166,9 @@ AS
 	END
 GO
 
-
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'GET_CST_TRS')
+	DROP PROCEDURE GET_CST_TRS
+GO
 CREATE PROCEDURE GET_CST_TRS
 (
 	@CST_ID INT
@@ -171,13 +182,3 @@ AS
 
 	END
 GO
---CREATE PROCEDURE CST_TRS_PNT
---(
---	@CST_ID INT
---)
---AS
---	BEGIN
---		SELECT 
---	END
---GO
-
