@@ -13,7 +13,7 @@ namespace TEST_BE_79_RAKA.Controllers
         private IConfiguration _config;
         private SqlConnection _con;
 
-        
+        //Constructor
         public CostumerController(IConfiguration config)
         {
             _config = config;
